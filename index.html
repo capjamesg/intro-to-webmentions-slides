@@ -1,0 +1,280 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Introduction to Webmention</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<style>
+			h1, h2 {
+				text-transform: none !important;
+			}
+		</style>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<img src="https://indieweb.org/img/indiewebcamp.svg" height="300" style="margin-bottom: -50px;" />
+					<h2 style="text-transform: none;">Decentralized Website Communication with Webmention</h2>
+				</section>
+				<section>
+					<h2>Who am I?</h2>
+					<p>I'm James, a technical marketer and <span style="color: orange;">IndieWeb</span> enthusiast. My domain name is <a href="https://jamesg.blog">jamesg.blog</a>.</p>
+					<p>By day, I work in computer vision for <span style="color: #CBC3E3;">Roboflow</span>.</p>
+					<p>By night, I have fun with my personal website and write open source software 🌙</p>
+				</section>
+				<section>
+					<h2>The problem: Silos own our data.</h2>
+					<p>Silos control how our posts interact with other sites, limit the medium through which we can publish content (i.e. exclusively video, short-form text), and decide how to show our content.</p>
+				</section>
+				<section>
+					<p>But the web doesn't have to be this way.</p>
+				</section>
+				<section>
+					<h2>What is Webmention?</h2>
+					<p><b style="color: lightblue">Webmention is a simple way to notify any URL when you link to it</b>. Site owners can display Webmentions to show likes, comments, bookmarks, and more.</p>
+					<p>Webmention is a standard, so it works on any site that complies with the specification.</p>
+				</section>
+				<section>
+					<h2>Let's start with a demo!</h2>
+					<iframe src="https://jamesg.blog/2022/12/30/highlight-js/" style="width: 100%; height: 500px; border: 0;"></iframe>
+				</section>
+				<section>
+					<p>By sending mentions, you can post content on your site that responds to posts on someone else's site.</p>
+				</section>
+				<section>
+					<p>With some additional markup, you can give context about your post (i.e. if your post is a reply ↩️, a like ❤️).</p>
+				</section>
+				<section>
+					<h2>How it Works: Receive a Mention</h2>
+					<p>To receive a mention, you need to have a Webmention endpoint set up. Let's do it 💻</p>
+					<p>We'll use <a href="https://webmention.io">webmention.io</a> to receive mentions.</p>
+				</section>
+				<section>
+					<h2>Receive a Mention</h2>
+					<p>First, sign up to webmention.io.</p>
+					<p>Then, add this code to the <code>&lt;head&gt;</code> of your site:</p>
+					<pre style="width: 100%"><code data-trim data-noescape style="width: 100%">
+						&lt;link
+							rel="webmention"
+							href="https://webmention.io/example.com/webmention" /&gt;
+					</code>
+					</pre>
+					<p>That's it! We can now receive Webmentions 🎉</p>
+				</section>
+				<section>
+					<h2>Send a Mention</h2>
+					<p>Let's a mention! 📄</p>
+					<p>To do so, I'm going to:</p>
+					<ol>
+						<li>Write a post on <a href="https://jamesg.coffee">jamesg.coffee</a> that links to <a href="https://codename.lol">codename.lol</a>.</li>
+						<li>Send a mention to <a href="https://codename.lol">codename.lol</a> using Telegraph.</li>
+					</ol>
+					<hr>
+					<a href="https://jamesg.coffee">(Demo)</a>
+				</section>
+				<section>
+					<p>When you send a mention, a tool like Telegraph:</p>
+					<ol>
+						<li>Discovers a Webmention endpoint for a site.</li>
+						<li>Sends a POST request to the endpoint with the URL of (i) <b style="color: orange;">your post</b> and (ii) <b style="color: orange;">the post you want to respond to</b>.</li>
+					</ol>
+					<p>Yep, sending a mention is just a POST request! 🙌</p>
+				</section>
+				<section>
+					<p>Then, a site's Webmention endpoint will:</p>
+					<ol>
+						<li>Process and validate the mention.</li>
+						<li>Do something with the mention (store it, send a webhook, etc.)</li>
+					</ol>
+				</section>
+				<section>
+					<p>Now... I have received a mention. What can I do with it?</p>
+					<p>Display it on your site!</p>
+				</section>
+				<section>
+					<div class="r-stack">
+						<img class="fragment" src="./assets/wm1.png">
+						<img class="fragment" src="./assets/wm2.png">
+						<img class="fragment" src="./assets/wm3.png">
+						<img class="fragment" src="./assets/wm4.png">
+						<img class="fragment" src="./assets/wm5.png">
+					</div>
+				</section>
+				<section>
+					<h2>Enough Talking, Let's Show Our Webmentions</h2>
+					<p>We're going to use <a href="https://github.com/PlaidWeb/webmention.js/">webmention.js</a>, a tool that lets you embed Webmention comments in only a few lines of code.</p>
+					<p>Let's get it set up!</p>
+				</section>
+				<section>
+					<h2>Review: What We've Done</h2>
+					<p>So far, we have:</p>
+					<ul>
+						<li>Set up a Webmention endpoint</li>
+						<li>Added a Webmention header to a site</li>
+						<li>Sent a mention</li>
+						<li>Received a mention</li>
+						<li>Displayed the mention on a site</li>
+					</ul>
+					<p>🎉</p>
+				</section>
+				<section>
+					<h2>Why go to all of this effort?</h2>
+					<img src="https://media0.giphy.com/media/3cXmze4Y8igXdnkc3U/giphy.gif?cid=ecf05e47s971klha42482q5vmy7cw9sta31tz6fudq3o6zn6&rid=giphy.gif&ct=g" />
+				</section>
+				<section>
+					<h2>You own your content and how it is displayed.</p>
+				</section>
+				<section>
+					<p>Webmention embodies a principle called <span style="color: orange;">POSSE</span>.</p>
+					<h2>Publish on your own site, syndicate elsewhere.</h2>
+				</section>
+				<section>
+					<p>POSSE lets you own the original copy of your content and syndicate it elsewhere.</p>
+					<p>If you syndicate original content, you can choose <span style="color: lightpink;">how to display it on your site</span>.</p>
+				</section>
+				<section>
+					<div class="r-stack">
+						<img class="fragment" src="./assets/aaronpk.png" />
+						<img class="fragment" src="./assets/tantek.png" />
+						<img class="fragment" src="./assets/jamesg.png" />
+					</div>
+				</section>
+				<section>
+					<h2>But... what can I do with mentions aside from post a comment? 🤔</h2>
+					<img src="https://media4.giphy.com/media/Oc4KnIJ3E7ziqN3l6T/giphy.gif?cid=ecf05e474ww74m075lhszhym4adlcq0eqpj4vwc71f90163w&rid=giphy.gif&ct=g" style="height: 250px; border-radius: 50px;" />
+				</section>
+				<section>
+					<h2>You could...</h2>
+					<ul>
+						<li>Send a comment to someone's website</li>
+						<li>Post a like or a bookmark</li>
+						<li>Vote on a poll</li>
+						<li>RSVP to a post</li>
+						<li>And so much more...</li>
+					</ul>
+				</section>
+				<section>
+					<p>Many of these ideas are enabled by small pieces of markup (<span style="color: lightgreen;">microformats</span>) added to links.</p>
+					<ul>
+						<li><code>u-in-reply-to</code>: Reply</li>
+						<li><code>u-like-of</code>: Like</li>
+						<li><code>u-bookmark-of</code>: Bookmark</li>
+						<li><code>p-rsvp</code>: RSVP</li>
+					</ul>
+				</section>
+				<section>
+					<p>Here's how I show polls on my site:</p>
+					<iframe src="https://jamesg.blog/poll/" style="width: 100%; height: 500px; border: none;"></iframe>
+					<!-- <img src="https://jamesg.blog/assets/indieweb_poll.png" style="margin-bottom: -100px; border-radius: 50px;" /> -->
+				</section>
+				<section>
+					<p>Here's how IndieWeb community members can respond to events:</p>
+					<div class="r-stack">
+						<img class="fragment" src="./assets/rsvp1.png">
+						<img class="fragment" src="./assets/rsvp2.png">
+					</div>
+					<p><a href="https://events.indieweb.org">(Demo)</a></p>
+				</section>
+				<section>
+					<p>Here's a news aggregator that is powered by mentions:</p>
+					<iframe src="https://news.indieweb.org/en" style="width: 100%; height: 500px; border: none;"></iframe>
+				</section>
+				<section>
+					<p>As a site owner, you control the logic for what happens when you receive mentions.</p>
+				</section>
+				<section>
+					<h2>Case Study: Breakfast and Coffee</h2>
+					<p>On <a href="https://breakfastand.coffee">Breakfast and Coffee</a>, sending a Webmention triggers:</p>
+					<ul>
+						<li>Creating a new wiki page if one doesn't exist</li>
+						<li>Adding a new review to an existing page</li>
+						<li>Generating new maps for category pages</li>
+					</ul>
+				</section>
+				<section>
+					<p>You can create new web pages using mentions:</p>
+					<div class="r-stack">
+						<img class="fragment" src="./assets/leedscoffee.png">
+						<img class="fragment" src="./assets/breakfastandcoffee.png">
+					</div>
+				</section>
+				<section>
+					<p>Post to social media from your website, anyone?</p>
+					<p>Yep, it's possible with Webmention!</p>
+				</section>
+				<section>
+					<h2>Brid.gy: Connecting the Web 🌉</h2>
+					<p><a href="https://brid.gy" style="color: rgb(50, 171, 211);">Brid.gy</a> is a service that takes your posts and sends them to your social media accounts.</p>
+					<p>To get started:</p>
+					<ol>
+						<li>Sign up for a Brid.gy account</li>
+						<li>Connect your social media accounts</li>
+						<li>Link to Brid.gy in posts you want to syndicate</li>
+						<li>Send a mention to Brid.gy</li>
+					</ol>
+				</section>
+				<section>
+					<p>What if I told you that we could publish GitHub issues on our own website and syndicate them to GitHub? 🤔</p>
+					<p>It's possible with Webmention!</p>
+					<p><a href="https://jamesg.coffee">(Demo)</a></p>
+				</section>
+				<section>
+					<h2>The Webmention spec is supported by dozens of publishing tools...</h2>
+					<div class="grid">
+						<img src="https://webmention.io/img/webmention-logo-380.png" />
+						<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/WordPress_blue_logo.svg/1200px-WordPress_blue_logo.svg.png" />
+						<img src="./assets/microblog.jpeg" />
+						<img src="https://www.drupal.org/files/druplicon-small.png" />
+					</div>
+					<style>
+						.grid {
+							display: grid;
+							grid-template-columns: repeat(4, 1fr);
+							grid-gap: 10px;
+						}
+						.grid img {
+							width: 100%;
+						}
+					</style>
+				</section>
+				<section>
+					<h2>✨ And it's a standard ✨</h2>
+					<p>You can write your own code to receive, display, and send mentions to meet your needs.</p>
+					<small>P.S. There are plenty of people to help with dozens of implementations from which to take inspiration!</small>
+				</section>
+				<section>
+					<h2>That's it, folks!</h2>
+					<p>Thanks for listening! 🙏</p>
+					<p>For more, check out the <a href="https://indieweb.org">indieweb.org/Webmention</a> page.</p>
+					<p>Join the IndieWeb in chat at <a href="https://indieweb.org/discuss">indieweb.org/discuss</a>.</p>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ],
+				slideNumber: true
+			});
+		</script>
+	</body>
+</html>
